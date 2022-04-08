@@ -34,7 +34,10 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    m_robotDrive.setDefaultCommand(new RunCommand(() -> m_robotDrive.driveMecanum(m_xboxController), m_robotDrive));
+    //mecanun drive command
+    //m_robotDrive.setDefaultCommand(new RunCommand(() -> m_robotDrive.driveMecanum(m_xboxController), m_robotDrive));
+
+    m_robotDrive.setDefaultCommand(new RunCommand(() -> m_robotDrive.arcadeDrive(m_xboxController.getLeftY(), m_xboxController.getRightX()), m_robotDrive));
   }
 
   /**
