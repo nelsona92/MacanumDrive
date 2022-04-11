@@ -74,8 +74,8 @@ public class DriveSubsystem extends SubsystemBase {
   //m_drive.
   }
 
-  public void driveMecanum(double LeftYSpeed, double LeftXSpeed, double RightYSpeed){
-    m_mecDrive.driveCartesian(Math.pow(LeftYSpeed, 3), Math.pow(LeftXSpeed, 3), Math.pow(RightYSpeed, 3));
+  public void driveMecanum(double LeftXSpeed, double RightXSpeed, double LeftYSpeed){
+    m_mecDrive.driveCartesian(Math.pow(LeftXSpeed, 3), Math.pow(RightXSpeed, 3), Math.pow(LeftYSpeed, 3));
     
   }
 /*
