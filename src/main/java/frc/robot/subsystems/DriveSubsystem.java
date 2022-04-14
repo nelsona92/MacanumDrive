@@ -6,8 +6,6 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.math.filter.SlewRateLimiter;
 //import edu.wpi.first.wpilibj.XboxController;
 //import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
@@ -36,7 +34,7 @@ public class DriveSubsystem extends SubsystemBase {
   
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 */
-  private final SlewRateLimiter filter = new SlewRateLimiter(0.5);
+
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
@@ -57,12 +55,12 @@ public class DriveSubsystem extends SubsystemBase {
 
     m_twoWheel.restoreFactoryDefaults();
     m_twoWheel.setIdleMode(IdleMode.kBrake);
-    m_twoWheel.setInverted(false);
+    m_twoWheel.setInverted(true);
     //m_twoWheel.burnFlash();
 
     m_threeWheel.restoreFactoryDefaults();
     m_threeWheel.setIdleMode(IdleMode.kBrake);
-    m_threeWheel.setInverted(false);
+    m_threeWheel.setInverted(true);
     //m_threeWheel.burnFlash();
 
 //ramp rate
@@ -75,7 +73,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void driveMecanum(double LeftXSpeed, double RightXSpeed, double LeftYSpeed){
-    m_mecDrive.driveCartesian(Math.pow(LeftXSpeed, 3), Math.pow(RightXSpeed, 3), Math.pow(LeftYSpeed, 3));
+    m_mecDrive.driveCartesian(-Math.pow(LeftYSpeed, 3), Math.pow(RightXSpeed, 3), Math.pow(LeftXSpeed, 3));
     
   }
 /*
