@@ -7,41 +7,30 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 //import edu.wpi.first.wpilibj.XboxController;
-//import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-//import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
 
   private final CANSparkMax m_zeroWheel = 
-    new CANSparkMax(DriveConstants.kLeftMotor00CanBusID, MotorType.kBrushless);
-  private final CANSparkMax m_oneWheel = 
     new CANSparkMax(DriveConstants.kLeftMotor01CanBusID, MotorType.kBrushless);
+  private final CANSparkMax m_oneWheel = 
+    new CANSparkMax(DriveConstants.kLeftMotor02CanBusID, MotorType.kBrushless);
   private final CANSparkMax m_twoWheel = 
-    new CANSparkMax(DriveConstants.kRightMotor02CanBusID, MotorType.kBrushless);
-  private final CANSparkMax m_threeWheel = 
     new CANSparkMax(DriveConstants.kRightMotor03CanBusID, MotorType.kBrushless);
+  private final CANSparkMax m_threeWheel = 
+    new CANSparkMax(DriveConstants.kRightMotor04CanBusID, MotorType.kBrushless);
   
   // MecanumDrive takes (frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor)
   private final MecanumDrive m_mecDrive = new MecanumDrive(m_zeroWheel, m_oneWheel, m_threeWheel, m_twoWheel);
-/*
-  private final MotorControllerGroup m_leftMotors =
-    new MotorControllerGroup(m_zeroWheel, m_oneWheel);
-  private final MotorControllerGroup m_rightMotors =
-    new MotorControllerGroup(m_twoWheel, m_threeWheel);
-  
-  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
-*/
 
+  private int Direction = 1;
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
 
-    //arcadedrive limits
-    //m_drive.setDeadband(0.15);
-    //m_drive.setMaxOutput(0.9);
 
     m_zeroWheel.restoreFactoryDefaults();
     m_zeroWheel.setIdleMode(IdleMode.kBrake);
@@ -76,12 +65,37 @@ public class DriveSubsystem extends SubsystemBase {
     m_mecDrive.driveCartesian(-Math.pow(LeftYSpeed, 3), Math.pow(RightXSpeed, 3), Math.pow(LeftXSpeed, 3));
     
   }
-/*
-  public void arcadeDrive(double fwd, double rot){
-    m_drive.arcadeDrive(-fwd*Math.abs(fwd), rot);
-  }
-*/
+  //private final AHRS m_ahrs =
+  //  new AHRS(SPI.Port.kMXP);
+//private final RobotContainer m_container = new RobotContainer();
+//public final XboxController m_xboxController = new XboxController(OIConstants.kDriverControllerPort);
+  //private final Encoder m_testEncoder = new Encoder(0, 1, false, EncodingType.k4X);
+    
 
+  // straight driving... needs gyro added
+  public void simpleDrive(double kpower) {
+    driveMecanum(0.0, 0.0, kpower);
+  }
+
+  // to drop maximum speed for delicate motion
+  public void setMax(double maxOutput){
+    m_mecDrive.setMaxOutput(maxOutput);
+  }
+
+  // turns the to half and then back on
+  public void halfPower() {
+    if (!Constants.powerState) {
+      m_mecDrive.setMaxOutput(DriveConstants.kSlowMaxSpeed);
+    }
+    else {
+      m_mecDrive.setMaxOutput(DriveConstants.kMaxSpeed); 
+    }
+    Constants.powerState = !Constants.powerState;
+  } // end winchOn
+
+  public void invertDrive(){
+    Direction = -Direction;
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
