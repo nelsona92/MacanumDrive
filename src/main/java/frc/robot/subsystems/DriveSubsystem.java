@@ -63,7 +63,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void driveMecanum(double LeftXSpeed, double RightXSpeed, double LeftYSpeed){
-    m_mecDrive.driveCartesian(Math.pow(LeftYSpeed, 3), Math.pow(RightXSpeed, 3), Math.pow(LeftXSpeed, 3));
+    m_mecDrive.driveCartesian(Math.pow(LeftYSpeed, 3), -Math.pow(RightXSpeed, 3), -Math.pow(LeftXSpeed, 3));
     
   }
   //private final AHRS m_ahrs =
