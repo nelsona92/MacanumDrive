@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+import javax.swing.plaf.TreeUI;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -34,22 +36,22 @@ public class DriveSubsystem extends SubsystemBase {
 
     m_zeroWheel.restoreFactoryDefaults();
     m_zeroWheel.setIdleMode(IdleMode.kBrake);
-    m_zeroWheel.setInverted(false);
+    m_zeroWheel.setInverted(true);
     //m_zeroWheel.burnFlash();
 
     m_oneWheel.restoreFactoryDefaults();
     m_oneWheel.setIdleMode(IdleMode.kBrake);
-    m_oneWheel.setInverted(false);
+    m_oneWheel.setInverted(true);
     //m_oneWheel.burnFlash();
 
     m_twoWheel.restoreFactoryDefaults();
     m_twoWheel.setIdleMode(IdleMode.kBrake);
-    m_twoWheel.setInverted(true);
+    m_twoWheel.setInverted(false);
     //m_twoWheel.burnFlash();
 
     m_threeWheel.restoreFactoryDefaults();
     m_threeWheel.setIdleMode(IdleMode.kBrake);
-    m_threeWheel.setInverted(true);
+    m_threeWheel.setInverted(false);
     //m_threeWheel.burnFlash();
 
 //ramp rate
@@ -62,7 +64,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void driveMecanum(double LeftXSpeed, double RightXSpeed, double LeftYSpeed){
-    m_mecDrive.driveCartesian(-Math.pow(LeftYSpeed, 3), Math.pow(RightXSpeed, 3), Math.pow(LeftXSpeed, 3));
+    m_mecDrive.driveCartesian(Math.pow(LeftYSpeed, 3), -Math.pow(RightXSpeed, 3), Math.pow(LeftXSpeed, 3));
     
   }
   //private final AHRS m_ahrs =
